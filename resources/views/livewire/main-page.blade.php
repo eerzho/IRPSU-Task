@@ -4,7 +4,7 @@
 
     </div>
     <div class="card-body">
-        qeqweqweqw
+        Если будут вопросы по коду готов ответить на все вопросы. EMAIL: eezho@gmail.com
     </div>
 </div>
 </div>
