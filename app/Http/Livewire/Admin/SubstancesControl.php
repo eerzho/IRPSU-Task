@@ -56,15 +56,11 @@ class SubstancesControl extends Component
         $this->render();
     }
 
-    public function delete($id)
+    public function delete(Substance $item)
     {
-        $item = Substance::findOrFail($id);
-
         $item->delete();
 
         $this->resetPage();
-
-        $this->render();
     }
 
     public function changeVisible($id)

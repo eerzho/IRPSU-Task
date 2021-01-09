@@ -57,15 +57,11 @@ class DrugsControl extends Component
         $this->render();
     }
 
-    public function delete($id)
+    public function delete(Drug $item)
     {
-        $item = Drug::findOrFail($id);
-
         $item->delete();
 
         $this->resetPage();
-
-        $this->render();
     }
 
     public function render()
