@@ -18,7 +18,7 @@ class DrugCreateModal extends Component
     public $name;
     public $step;
     public $values;
-    public $perPage = 0;
+    public $perPage;
 
     public function open()
     {
@@ -27,7 +27,10 @@ class DrugCreateModal extends Component
 
         $this->displayModal = true;
         $this->name = '';
+
         $this->step = 1;
+        $this->perPage = 0;
+        $this->values = [];
     }
 
     public function close()

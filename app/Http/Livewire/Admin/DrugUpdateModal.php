@@ -20,8 +20,8 @@ class DrugUpdateModal extends Component
     public $item;
 
     public $step;
-    public $values = [];
-    public $perPage = 0;
+    public $values;
+    public $perPage;
 
 
 
@@ -35,13 +35,15 @@ class DrugUpdateModal extends Component
         $this->name = $item->name;
         $this->item = $item;
 
+        $this->step = 1;
+        $this->perPage = 0;
+        $this->values = [];
+
         $ids = $item->substances()->pluck('id');
 
         foreach ($ids as $id) {
             $this->values[$id] = true;
         }
-
-        $this->step = 1;
     }
 
     public function close()
