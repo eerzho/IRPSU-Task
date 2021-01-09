@@ -1,5 +1,6 @@
 <div class="card">
     <livewire:admin.substance-create-modal></livewire:admin.substance-create-modal>
+    <livewire:admin.substance-update-modal></livewire:admin.substance-update-modal>
     <div class="card-header d-flex">
          <input class="form-control w-50"
                 type="text"
@@ -8,7 +9,7 @@
 
         <button class="btn btn-primary ml-auto"
                 type="button"
-                wire:click.prevent="openModal">
+                wire:click.prevent="openCreateModal">
             Add Substance
         </button>
     </div>
@@ -21,6 +22,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Drugs Count</th>
+                <th scope="col">Edit</th>
                 <th scope="col">Visible</th>
                 <th scope="col">Delete</th>
             </tr>
@@ -32,6 +34,12 @@
                     <td>{{$item->name}}</td>
                     <td>{{$item->created_at->format('d.m.Y')}}</td>
                     <td>{{$item->drugs_count}}</td>
+                    <td>
+                        <button class="btn btn-primary"
+                                wire:click.prevent="openUpdateModal({{$item->id}})">
+                            Edit
+                        </button>
+                    </td>
                     <td>
                         <button class="btn btn-{{$item->visible ? 'secondary' : 'success'}}"
                                 type="button" onclick="confirm('Are you sure ?') || event.stopImmediatePropagation()"

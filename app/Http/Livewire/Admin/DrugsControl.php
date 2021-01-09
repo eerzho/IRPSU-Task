@@ -14,7 +14,8 @@ class DrugsControl extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
-        'drugCreated' => 'created',
+        'drugCreated' => 'updateList',
+        'drugUpdated' => 'updateList'
     ];
 
     public $search;
@@ -41,12 +42,17 @@ class DrugsControl extends Component
         return $items;
     }
 
-    public function openModal()
+    public function openCreateModal()
     {
         $this->emit('openDrugCreateModal');
     }
 
-    public function created()
+    public function openUpdateModal($id)
+    {
+        $this->emit('openDrugUpdateModal', $id);
+    }
+
+    public function updateList()
     {
         $this->render();
     }

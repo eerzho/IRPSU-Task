@@ -13,7 +13,8 @@ class SubstancesControl extends Component
     protected $paginationTheme = 'bootstrap';
 
     protected $listeners = [
-        'substanceCreated' => 'created',
+        'substanceCreated' => 'updateList',
+        'substanceUpdated' => 'updateList',
     ];
 
     public $search;
@@ -40,12 +41,17 @@ class SubstancesControl extends Component
         return $items;
     }
 
-    public function openModal()
+    public function openCreateModal()
     {
         $this->emit('openSubstanceCreateModal');
     }
 
-    public function created()
+    public function openUpdateModal($id)
+    {
+        $this->emit('openSubstanceUpdateModal', $id);
+    }
+
+    public function updateList()
     {
         $this->render();
     }

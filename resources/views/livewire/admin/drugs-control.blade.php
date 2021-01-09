@@ -1,5 +1,6 @@
 <div class="card">
     <livewire:admin.drug-create-modal></livewire:admin.drug-create-modal>
+    <livewire:admin.drug-update-modal></livewire:admin.drug-update-modal>
     <div class="card-header d-flex">
         <input class="form-control w-50"
                type="text"
@@ -8,7 +9,7 @@
 
         <button class="btn btn-primary ml-auto"
                 type="button"
-                wire:click.prevent="openModal">
+                wire:click.prevent="openCreateModal">
             Add Drug
         </button>
     </div>
@@ -21,6 +22,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Substances Count</th>
+                <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
             </thead>
@@ -31,6 +33,12 @@
                     <td>{{$item->name}}</td>
                     <td>{{$item->created_at->format('d.m.Y')}}</td>
                     <td>{{$item->substances_count}}</td>
+                    <td>
+                        <button class="btn btn-primary"
+                                wire:click.prevent="openUpdateModal({{$item->id}})">
+                            Edit
+                        </button>
+                    </td>
                     <td>
                         <button class="btn btn-danger"
                                 type="button"
