@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Drug;
 use App\Models\Substance;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Collection;
@@ -62,29 +63,29 @@ class SearchPage extends Component
             foreach ($this->selectedSubstances as $substance)
                 $ids[] = $substance['id'];
 
-            $res = Drug::with(['substances' => Drug::substancesSearch($ids)])
-                ->withCount(['substances as matches_count' => Drug::substancesSearch($ids)])
-                ->whereHas('substances', Drug::substancesSearch($ids))
-                ->withCount(['substances'])
-                ->having('matches_count', '>', 1)
-                ->orderByDesc('matches_count')
+            $res = Drug::with('')->withCount(['matches' => Drug::substancesSearch($ids), 'substances'])
+                ->having('matches_count', '=' ,'substance_count')
+//                ->whereHas('substances', Drug::substancesSearch($ids))
+//                ->orderByDesc('matches_count')
                 ->get();
 
-            $haveSameCount = false;
-            foreach ($res as $item) {
-                if ($item->matches_count == $item->substances_count) {
-                    $haveSameCount = true;
-                    break;
-                }
-            }
+            //                ->having('matches_count', '>', 1)
 
-            if ($haveSameCount) {
-                foreach ($res as $key => $item) {
-                    if ($item->matches_count != $item->substances_count) {
-                        unset($res[$key]);
-                    }
-                }
-            }
+//            $haveSameCount = false;
+//            foreach ($res as $item) {
+//                if ($item->matches_count == $item->substances_count) {
+//                    $haveSameCount = true;
+//                    break;
+//                }
+//            }
+//
+//            if ($haveSameCount) {
+//                foreach ($res as $key => $item) {
+//                    if ($item->matches_count != $item->substances_count) {
+//                        unset($res[$key]);
+//                    }
+//                }
+//            }
 
             $res = $this->paginate($res);
         }

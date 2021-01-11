@@ -27,11 +27,15 @@ class Drug extends Model
         return $this->belongsToMany(Substance::class);
     }
 
+    public function matches()
+    {
+        return $this->belongsToMany(Substance::class);
+    }
+
     public static function substancesSearch($ids)
     {
         return function ($q) use ($ids) {
             $q->whereIn('id', $ids)->where('visible', true);
         };
     }
-
 }
