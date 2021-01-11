@@ -63,30 +63,13 @@ class SearchPage extends Component
                 $ids[] = $substance['id'];
 
             $res = Drug::with(['substances' => Drug::substancesSearch($ids)])
-                ->withCount(['substances as matches_count' => Drug::substancesSearch($ids)])
+                ->withCount(['substances as matches_count' => Drug::substancesSearch($ids), 'substances'])
+                ->havingRaw('substances_count = matches_count')
+                ->havingRaw('matches_count > 1')
+                ->orHavingRaw('matches_count > 1')
                 ->whereHas('substances', Drug::substancesSearch($ids))
-                ->withCount(['substances'])
-                ->having('matches_count', '>', 1)
                 ->orderByDesc('matches_count')
-                ->get();
-
-            $haveSameCount = false;
-            foreach ($res as $item) {
-                if ($item->matches_count == $item->substances_count) {
-                    $haveSameCount = true;
-                    break;
-                }
-            }
-
-            if ($haveSameCount) {
-                foreach ($res as $key => $item) {
-                    if ($item->matches_count != $item->substances_count) {
-                        unset($res[$key]);
-                    }
-                }
-            }
-
-            $res = $this->paginate($res);
+                ->paginate();
         }
 
         return $res;
