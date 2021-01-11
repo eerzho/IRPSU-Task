@@ -4,11 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Drug;
 use App\Models\Substance;
-use Illuminate\Pagination\Paginator;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchPage extends Component
 {
@@ -19,8 +16,6 @@ class SearchPage extends Component
     public $substances;
     public $selectedSubstances = [];
     public $selectedKey;
-
-    public $completeMatch = false;
 
     public function mount()
     {
@@ -73,13 +68,6 @@ class SearchPage extends Component
         }
 
         return $res;
-    }
-
-    public function paginate($items, $perPage = 10, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     public function render()
