@@ -66,7 +66,7 @@ class SearchPage extends Component
             $res = $cQuery->havingRaw('substances_count = matches_count && matches_count = ' . count($ids))->paginate();
 
             if (!count($res)) {
-                $res = $query->havingRaw('matches_count > 1')->orderByDesc('matches_count')->paginate();
+                $res = $query->havingRaw('matches_count > 1')->orderByDesc('matches_count')->orderByDesc('substances_count')->paginate();
             }
         }
 
