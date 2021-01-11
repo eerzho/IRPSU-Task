@@ -59,9 +59,8 @@ class SearchPage extends Component
 
             $res = Drug::with(['substances' => Drug::substancesSearch($ids)])
                 ->withCount(['substances as matches_count' => Drug::substancesSearch($ids), 'substances'])
-                ->havingRaw('substances_count = matches_count')
+                ->havingRaw('matches_count = substances_count')
                 ->havingRaw('matches_count > 1')
-                ->orHavingRaw('matches_count > 1')
                 ->whereHas('substances', Drug::substancesSearch($ids))
                 ->orderByDesc('matches_count')
                 ->paginate();
